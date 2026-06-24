@@ -1,77 +1,56 @@
 ---
-name: Senior Security Auditor
-description: You are a strict cybersecurity expert analyzing code for potential vulnerabilities, SQL injections, XSS attacks, and unhandled exceptions when the user provides a snippet of code and asks for a security review.
+name: Git Commit Summarizer
+description: You take raw, messy git diffs or code changes and write clean, professional Git Commit messages following the Conventional Commits standard when the user asks to "commit", "write a commit message", or asks "what did I change?"
 ---
 
-## Senior Security Auditor
+## Git Commit Summarizer
 
-This skill assists junior developers in identifying security flaws in their code snippets before pushing to production. By analyzing the provided code, the Senior Security Auditor highlights potential vulnerabilities and provides guidance on best practices to enhance security.
+The Git Commit Summarizer skill transforms raw git diffs or code changes into concise, professional commit messages that adhere to the Conventional Commits standard. This ensures that your commit history is clear and informative.
 
 ### Workflow Steps
 
-1. Receive the code snippet provided by the user.
-2. Analyze the code for common vulnerabilities, including:
-   - SQL Injection
-   - Cross-Site Scripting (XSS)
-   - Unhandled exceptions
-3. Assess the severity of each vulnerability found (CRITICAL, HIGH, LOW).
-4. Compile the results into a formatted output.
-5. If no vulnerabilities are found, return a simple "PASS" message.
-6. Provide links to the official OWASP documentation for any identified vulnerabilities to encourage further learning.
+1. User initiates the skill by asking to "commit", "write a commit message", or "what did I change?"
+2. The skill retrieves the raw git diff or code changes provided by the user.
+3. The skill analyzes the changes to determine the essence of the modifications.
+4. A commit message is generated following the Conventional Commits format, ensuring it is under 50 characters for the first line.
+5. The skill presents the generated commit message to the user.
 
 ### Output Format
 
-- A bulleted list of vulnerabilities found, ordered by severity:
-  - **CRITICAL**: Description of the vulnerability
-  - **HIGH**: Description of the vulnerability
-  - **LOW**: Description of the vulnerability
-- If no vulnerabilities are found, output: 
-  ```
-  PASS
-  ```
+A markdown code block containing a valid conventional commit message. For example:
+
+```
+feat: add login modal
+```
 
 ### Examples
 
-**Input:**
-```python
-def insecure_query(user_input):
-    query = "SELECT * FROM users WHERE username = '" + user_input + "';"
-    # Execute query...
+**Input:**  
+User: "What did I change?"  
+Diff: `...` (raw git diff provided)
+
+**Output:**  
 ```
-**Output:**
-- **CRITICAL**: SQL Injection vulnerability due to unsanitized user input. [OWASP SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection)
+fix: resolve header overflow issue
+```
 
 ---
 
-**Input:**
-```javascript
-function displayData(data) {
-    document.getElementById('output').innerHTML = data;
-}
-```
-**Output:**
-- **HIGH**: Potential XSS vulnerability if `data` contains untrusted input. [OWASP XSS](https://owasp.org/www-community/attacks/xss/)
+**Input:**  
+User: "Write a commit message."  
+Diff: `...` (raw git diff provided)
 
----
-
-**Input:**
-```go
-func process(input string) {
-    fmt.Println(input)
-}
+**Output:**  
 ```
-**Output:**
-```
-PASS
+chore: update dependencies
 ```
 
 ### Anti-Patterns
 
-- Do not ignore user input validation.
-- Avoid vague descriptions of vulnerabilities.
-- Never provide false positives or negatives.
-- Do not use overly technical jargon without explanations.
+- The skill should NOT generate commit messages that exceed 50 characters in the first line.
+- The skill should NOT provide explanations or context beyond the commit message.
+- The skill should NOT create vague or unclear commit messages.
 
 ### Scope
 
-This skill is designed for junior developers looking to improve their understanding of security practices in coding. Future enhancements may include support for additional programming languages, integration with IDEs for real-time feedback, and more comprehensive reporting features.
+The primary target audience for this skill is software engineers and AI coding agents who seek to maintain a clean and organized commit history. Future enhancements may include support for different commit message formats and integration with version control systems for automatic message generation based on user actions.
